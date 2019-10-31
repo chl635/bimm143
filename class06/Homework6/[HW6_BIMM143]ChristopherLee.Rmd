@@ -1,0 +1,63 @@
+---
+title: "Homework 6"
+author: "Christopher Lee"
+date: "10/23/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The inputs to the function are the PDB IDs.
+This function provides information about the protein from online by entering the PDB ID into the function named protein.
+The output of the function is a plot of the residues for the protein
+```{r}
+protein <- function (x) {
+
+library(bio3d)
+s1 <- read.pdb(x) # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+
+}
+
+protein("4AKE")
+protein("1AKE")
+protein("1E4Y")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
