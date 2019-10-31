@@ -1,0 +1,266 @@
+---
+title: "class08"
+author: "Chris"
+date: "10/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## K-means clustering
+
+```{r}
+# Generate some example data for clustering
+tmp <- c(rnorm(30,-3), rnorm(30,3))
+x <- cbind(x=tmp, y=rev(tmp))
+plot(x)
+```
+
+Use kmeans () function setting k = 2 and nstart = 20
+```{r}
+k <- kmeans(x, centers = 2, nstart = 20)
+```
+
+inspect/print results
+
+```{r}
+k
+```
+
+```{r}
+k$size
+```
+
+```{r}
+k$cluster
+```
+
+```{r}
+k$centers
+```
+
+
+plot x colored by kmeans
+
+
+```{r}
+plot(x, col= k$cluster)
+points(k$centers, col = "blue", pch = 15)
+```
+
+
+
+
+
+
+## Hierarchical clustering in R
+The hclust() function requires a distance matrix as input.
+You can get this from 'dist()' function
+
+```{r}
+# First we need to calculate point (dis)similarity
+# as the Euclidean distance between observations
+dist_matrix <- dist(x)
+
+# The hclust() function returns a hierarchical
+# clustering model
+hc <- hclust(d = dist_matrix)
+
+# the print method is not so useful here
+hc 
+```
+
+```{r}
+plot(hc)
+# Draws a dendrogram
+plot(hc)
+abline(h=6, col="red")
+grps <- cutree(hc, h = 6)
+```
+
+
+```{r}
+cutree(hc, k = 2)
+```
+
+
+```{r}
+# Step 1. Generate some example data for clustering
+x <- rbind(
+ matrix(rnorm(100, mean=0, sd = 0.3), ncol = 2), # c1
+ matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2), # c2
+ matrix(c(rnorm(50, mean = 1, sd = 0.3), # c3
+ rnorm(50, mean = 0, sd = 0.3)), ncol = 2))
+colnames(x) <- c("x", "y")
+
+# Step 2. Plot the data without clustering
+plot(x)
+
+# Step 3. Generate colors for known clusters
+# (just so we can compare to hclust results)
+col <- as.factor( rep(c("c1","c2","c3"), each=50) )
+plot(x, col=col)
+```
+
+```{r}
+kmeans(x, centers = 3, nstart = 20)
+```
+
+```{r}
+#clustering
+h <- hclust(dist(x))
+
+#draw tree
+plot(h)
+abline(h = 2, col = "red")
+
+#cut the tree into clusters/groups
+grp <-cutree(h, k = 3)
+```
+
+plot data colored by hclust
+
+```{r}
+plot(x, col = grp)
+
+# how many points in each cluster
+table(grp)
+```
+
+cross-tabulate compare clustering result with the known answer
+
+```{r}
+table(grp, col)
+```
+
+
+
+
+```{r}
+## You can also download this file from the class website!
+mydata <- read.csv("https://tinyurl.com/expression-CSV",
+ row.names=1)
+
+head(mydata)
+
+
+```
+
+```{r}
+dim(mydata)
+```
+
+
+
+```{r}
+## lets do PCA with prcomp()
+pca <- prcomp(t(mydata), scale=TRUE) 
+
+## See what is returned by the prcomp() function
+attributes(pca) 
+```
+
+```{r}
+pca$x
+```
+
+```{r}
+## A basic PC1 vs PC2 2-D plot
+plot(pca$x[,1], pca$x[,2]) 
+
+## Precent variance is often more informative to look at
+pca.var <- pca$sdev^2
+pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
+pca.var.per
+
+#Scree Plot
+barplot(pca.var.per, main="Scree Plot",
+ xlab="Principal Component", ylab="Percent Variation")
+```
+
+
+```{r}
+plot(pca$x[,1], pca$x[,2],
+     col = c("red", "red", "red", "red", "red",
+             "blue", "blue", "blue", "blue", "blue"))
+```
+
+
+
+```{r}
+x <- read.csv("UK_foods.csv", row.names = 1)
+dim(x)
+head(x)
+
+
+```
+
+
+```{r}
+barplot(as.matrix(x), beside=T, col=rainbow(nrow(x)))
+```
+
+
+```{r}
+pairs(x, col=rainbow(10), pch=16)
+```
+
+
+
+```{r}
+pca <- prcomp(t(x))
+summary(pca)
+```
+
+
+
+
+
+
+
+
+
+
+```{r}
+# Plot PC1 vs PC2
+plot(pca$x[,1], pca$x[,2], xlab="PC1", ylab="PC2", xlim=c(-270,500))
+text(pca$x[,1], pca$x[,2], colnames(x), col = c("yellow", "red", "blue", "green" ))
+```
+
+
+```{r}
+v <- round( pca$sdev^2/sum(pca$sdev^2) * 100 )
+v
+
+barplot(v, xlab="Principal Component", ylab="Percent Variation")
+```
+
+
+```{r}
+## Lets focus on PC1 as it accounts for > 90% of variance 
+par(mar=c(10, 3, 0.35, 0))
+barplot( pca$rotation[,1], las=2 )
+
+```
+
+
+
+```{r}
+par(mar=c(10, 3, 0.35, 0))
+barplot( pca$rotation[,2], las=2 )
+```
+
+
+
+```{r}
+## The inbuilt biplot() can be useful for small datasets 
+biplot(pca)
+
+```
+
+
+
+
+
