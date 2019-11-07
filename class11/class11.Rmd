@@ -1,0 +1,84 @@
+---
+title: "Class 11: Structural Bioinformatics"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## The PDB database for biomolecular structure data
+
+```{r}
+data <- read.csv("Data Export Summary.csv")
+data
+```
+Q1: 
+determine the percentage of structures solved by X-Ray and Electron Microscopy. 
+```{r}
+(data$Total/sum(data$Total)) * 100
+```
+
+
+
+determine what proportion of structures are protein?
+
+```{r}
+(sum(data$Proteins)/sum(data$Total)) *100
+```
+
+
+
+```{r}
+data <- read.csv("Data Export Summary.csv")
+data
+```
+
+
+Total number of entries
+```{r}
+sum(data$Total)
+```
+
+
+proportion of entries from each method
+```{r}
+round((data$Total/sum(data$Total)) * 100, 2)
+```
+
+Proportion that are protein
+```{r}
+round((sum(data$Proteins) / sum(data$Total)) * 100, 2)
+```
+
+
+## HIV-Pr
+
+```{r}
+library(bio3d)
+pdb <- read.pdb("1hsg")
+## Note: Accessing on-line PDB file
+print(pdb)
+```
+
+```{r}
+read.pdb("1HSG.pdb.txt")
+```
+
+Q6. How many amino acid residues are there in this pdb object and what are the two nonprotein residues?
+198 residues (CA)
+water and MK1 are the two nonprotein residues
+
+```{r}
+ligand <- atom.select(pdb, "ligand", value = TRUE)
+write.pdb(ligand, file="1hsg_ligand.pdb")
+```
+
+
+
+
+
+
+
