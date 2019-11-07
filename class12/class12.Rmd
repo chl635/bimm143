@@ -27,14 +27,45 @@ correspond to and how would you get a listing of all reside values in this struc
 Water and MK1
 
 
+```{r}
+pdb <- read.pdb("1hsg.pdb")
+protein <- atom.select(pdb, "protein", value = TRUE)
+write.pdb(protein, file= "1hsg_protein.pdb")
+protein
+```
+
+```{r}
+ligand <- atom.select(pdb, "ligand", value = TRUE)
+write.pdb(ligand, file = "1hsg_ligand.pdb")
+ligand
+```
+
+
+Q2: Can you locate the binding site visually? Note that
+crystal structures normally lack hydrogen atoms, why? 
+The empty area inside the molecule, too small?
+
+Q3: Look at the charges. Does it make sense (e.g. based on your knowledge of the
+physiochemical properties of amino acids)?
 
 
 
 
+##Process the docking results
+```{r}
+library(bio3d)
+res <- read.pdb("all.pdbqt", multi=TRUE)
+write.pdb(res, "results.pdb")
+```
 
 
 
+```{r}
+# res <- read.pdb("all.pdbqt", multi=TRUE)
+ori <- read.pdb("ligand.pdbqt")
+rmsd(ori, res)
 
+```
 
 
 
