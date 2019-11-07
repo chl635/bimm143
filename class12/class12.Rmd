@@ -1,0 +1,53 @@
+---
+title: "Class 12: Structural Bioinformatics II"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prep for docking
+
+We want to produce a protein-only PDB file and a drug only PDB file.
+```{r}
+library(bio3d)
+file.name <- get.pdb("1hsg")
+```
+
+
+```{r}
+hiv <- read.pdb("1hsg.pdb")
+hiv
+```
+
+
+Q1: What is the name of the two non protein resid values in this structure? What does resid
+correspond to and how would you get a listing of all reside values in this structure? 
+Water and MK1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
