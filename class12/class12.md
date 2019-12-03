@@ -1,7 +1,7 @@
 Class 12: Structural Bioinformatics II
 ================
 
-## Prep for docking
+## Prepare for docking
 
 We want to produce a protein-only PDB file and a drug only PDB file.
 
