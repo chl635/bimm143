@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-## DESeq2 setup
+## DESeq2 Setup
 
 We will use the DESeq2 package from bioconductor. To install this we ran **in the CONSOLE** - note eval=FALSE option:
 
