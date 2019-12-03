@@ -22,7 +22,7 @@ We will use the DESeq2 package from bioconductor. To install this we ran **in th
 
 
 
-## Input dataset
+## Input Dataset
 
 Input countData and colData (metadata)
 ```{r}
